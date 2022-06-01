@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"	
 )
@@ -15,6 +17,7 @@ import (
 
 */
 
+/*
 func main() {
 	r := gin.Default()
 	// 限制上传最大尺寸（有大佬验证说是为了限制处理该文件所占用的最大内存https://www.jianshu.com/p/9ec31f232f5f）
@@ -26,9 +29,35 @@ func main() {
 			c.String(500, "上传图片出错")
 		}
 
-		c.SaveUploadedFile(file, file.Filename)
-		c.JSON(http.StatusOK, gin.H{"message": file.Header.Context})
-		//c.String(http.StatusOK, file.Filename)
+		c.SaveUploadedFile(file, "summerice-" + file.Filename)
+		c.JSON(http.StatusOK, gin.H{"文件保存成功": file.Filename})
+		//c.String(http.StatusOK, fmt.Sprintf("%v ", r))
 	})
-	r.Run(":2048")
+	
+	r.Run()
+}
+*/
+
+
+func main() {
+	r := gin.Default()
+	r.POST("/upload", func(c *gin.Context) {
+		_, headers, err := c.Request.FormFile("file")
+		if err != nil {
+			log.Printf("Error when try to get file: %v", err)
+		}
+		// headers.Size 获取文件大小
+		if headers.Size > 1024*1024*2 {
+			fmt.Println("文件太大了！")
+			return
+		}
+		//headers.Header.Get("Content-Type")获取上传文件的类型
+		if headers.Header.Get("Content-Type") != "image/png" {
+			fmt.Println("只允许上传png图片")
+			return
+		}
+		c.SaveUploadedFile(headers, "./upload/" + headers.Filename)
+		c.String(http.StatusOK, headers.Filename)
+	})
+	r.Run()
 }
