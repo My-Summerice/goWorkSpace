@@ -23,7 +23,7 @@ func main() {
 		for _, file := range files {
 			// 逐个存
 			if err := c.SaveUploadedFile(file, "./upload/" + file.Filename); err != nil {
-				c.String(http.StatusBadRequest, fmt.Sprintf("upload err %s"), err.Error())
+				c.String(http.StatusBadRequest, fmt.Sprintf("upload %s err %s"), file.Filename, err.Error())
 				return
 			}
 		}
