@@ -8,7 +8,7 @@ import (
 )
 
 /* 分组路由，暂有bug
-func routerGroup(r ) {
+func routerGroup(r *gin.Context) {
 	// 创建r1组
 	r1 := r.Group("/r1")
 	{
@@ -48,7 +48,7 @@ func main() {
 		c.String(http.StatusOK, " username=%s\n action=%s", name, action)
 	})
 
-	//routerGroup()
+	//routerGroup(r)
 	
 	// 3.监听端口，默认在8080
 	// Run("里面不指定端口号默认为8080")
