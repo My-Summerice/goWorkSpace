@@ -8,6 +8,7 @@ import (
 )
 
 /* 分组路由，暂有bug
+   详见routesGroup.go
 func routerGroup(r *gin.Context) {
 	// 创建r1组
 	r1 := r.Group("/r1")
