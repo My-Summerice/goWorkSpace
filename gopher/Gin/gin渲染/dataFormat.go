@@ -1,6 +1,8 @@
 package main
 
 import (
+    "net/http"
+
     "github.com/gin-gonic/gin"
     "github.com/gin-gonic/gin/testdata/protoexample"
 )
@@ -12,7 +14,7 @@ func main() {
     r := gin.Default()
     // 1.json
     r.GET("/someJSON", func(c *gin.Context) {
-        c.JSON(200, gin.H{"message": "someJSON", "status":200})
+        c.JSON(http.StatusOK, gin.H{"message": "someJSON", "status": http.StatusOK})
     })
     // 2.结构体响应
     r.GET("/someStruct", func(c *gin.Context) {
