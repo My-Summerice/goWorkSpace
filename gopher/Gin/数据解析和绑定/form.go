@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
+	_"fmt"
 	"net/http"
 
-	"github.com/gin-gonic-gin"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
