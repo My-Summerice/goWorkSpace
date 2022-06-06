@@ -15,22 +15,24 @@ type Login struct {
 }
 
 func main() {
+	// 1.创建路由
+	// 默认使用两个中间件Logger(),Recovery()
 	r := gin.Default()
-
-	r.POST("/loginFORM", func(c *gin.Context) {
-		var form Login
+	// JSON绑定
+	r.GET("/:user/:password", func(c *gin.Context) {
+		// 声明接收的变量
+		var login Login
 		// Bind()默认解析并绑定form格式
-		// 根据请求头中的content-type自动推断
-		if err := c.Bind(&form); err != nil {
+		// 根据请求头中content-type自动推断
+		if err := c.ShouldBindUri(&login); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+			return	
 		}
-		// 判断用户名、密码是否正确
-		if form.User != "root" || form.Password != "admin" {
+		// 判断用户名密码是否正确
+		if login.User != "root" || login.Password != "admin" {
 			c.JSON(http.StatusBadRequest, gin.H{"status": "304"})
-			return
 		}
-		c.JSON(http.StatusOK, gin.H{"status": "200"})
+		c.JSON(http.StatusOK, gin.H{"status":"200"})
 	})
 	r.Run(":8000")
 }
