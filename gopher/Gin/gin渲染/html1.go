@@ -13,7 +13,7 @@ func main() {
 	// 解析模板
     // Gin框架中使用LoadHTMLGlob()或者LoadHTMLFiles()方法进行HTML模板渲染
     // LoadHTMLGlob()方法是加载一组模板文件;
-    // LoadHTMLFiles()方法是加载指定的一个模板文件；
+    // LoadHTMLFiles()方法是加载指定名字模板文件；可以加载多个指定名字的模板文件
     // 模板通常都放在templates文件夹下的
 	r.LoadHTMLGlob("templates/index.html")
 	r.GET("/index", func(c *gin.Context) {
