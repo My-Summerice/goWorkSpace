@@ -30,6 +30,7 @@ var store = sessions.NewCookieStore([]byte("something-very-secret"))
 func main() {
 	http.HandleFunc("/save", SaveSession)
 	http.HandleFunc("/get", GetSession)
+	http.HandleFunc("/delete", DelSession)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("HTTP server failed, err:", err)
@@ -63,5 +64,18 @@ func GetSession(w http.ResponseWriter, r *http.Request) {
 	// 获取session中存储的值
 	name := session.Values["name"]
 	number := session.Values[10]
-	fmt.Println("name is %s, number is %d", &name, &number)
+	fmt.Printf("name is %s, number is %d\n", name, number)
+}
+
+func DelSession(w http.ResponseWriter, r *http.Request) {
+	// 同上
+	session, err := store.Get(r, "session-name")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// 删除
+	// 将session的最大存储时间设置为小于0即为删除
+	session.Options.MaxAge = -1
+	session.Save(r, w)
 }
