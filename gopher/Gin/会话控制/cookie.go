@@ -17,6 +17,13 @@ Cookie介绍
 Cookie的用途
 
     测试服务端发送cookie给客户端，客户端请求时携带cookie
+
+Cookie的缺点
+
+    不安全，明文
+    增加带宽消耗
+    可以被禁用
+    cookie有上限
 */
 
 
