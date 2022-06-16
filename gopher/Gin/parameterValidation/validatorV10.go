@@ -66,9 +66,9 @@ func main() {
 func getTime(c *gin.Context) {
     var now Info
     // 数据模型绑定查询字符串验证
-    if err := c.ShouldBindWith(&now, binding.Query); err == nil {
-        c.JSON(http.StatusOK, gin.H{"message": "time are valid!"})
-    } else {
+    if err := c.ShouldBind(&now); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
     }
+    c.JSON(http.StatusOK, "数据正确")
 }
