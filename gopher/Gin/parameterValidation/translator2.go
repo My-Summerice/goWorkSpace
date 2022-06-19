@@ -31,13 +31,14 @@ func initTrans(locale string) (err error) {
 		uni := ut.New(enT, zhT, enT)
 
 		// locale 通常取决于 http 请求头的 “Accept-Language”
+		// 通过断言获取需要的语种翻译器类型//个人理解
 		// 也可使用 uni.FindTranslator(...) 传入多个locale进行查找
 		var ok bool
 		if trans, ok = uni.GetTranslator(locale); !ok {	//这一步的类型断言格式没看懂
 			return fmt.Errorf("uni.GetTranslator(%s) faild", locale)
 		}
 
-		// 注册各语种翻译器
+		// 注册对应语种的翻译器
 		switch locale {
 		//case "en":
 		//	err = enTranslations.RegisterDefaultTranslations(v, trans)
