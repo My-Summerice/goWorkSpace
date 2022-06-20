@@ -21,7 +21,17 @@ var trans ut.Translator
 func initTrans(locale string) (err error) {
 	//  修改gin框架中的Validator引擎属性，实现自定义验证器
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		
+		/*
+		// 注册一个获取 指定tag 的自定义方法
+		v.RegisterTagNameFunc(func(stru interface{}) string {	//该方法传入的是结构体的指针
+			t := reflect.TypeOf(stru).Elem()	// 使用反射包的方法获取指针指向的值对应的结构体内容
+			for i = 0; i < t.NumField(); i++ {	// t.NumField()获取结构体的字段数量
 
+			}
+		})
+		*/
+		
 		zhT := zh.New()	// 中文翻译器
 		enT := en.New()	// 英文翻译器
 		
@@ -70,7 +80,7 @@ func main() {
 
 	r.GET("/userInfo", func(c *gin.Context) {
 		var u userInfo
-		// 解析前端数据并绑定到机构体u
+		// 解析前端数据并绑定到结构体u
 		if err := c.ShouldBind(&u); err != nil {
 			// 使用类型断言获取validator.ValidationErrors类型的errors
 			errs, ok := err.(validator.ValidationErrors)
